@@ -1,0 +1,27 @@
+name: mqttled
+version: 0.1
+summary: dcled snap allows to send messages to the USB LED Dream Cheeky
+description: This snap connects to a local mqtt broker that listens on port 11883, install mqttsrv for this. Any message published in the topic "actuator/usbled" will be displayed on the screen.
+confinement: devmode  # use "strict" to enforce system access only via declared interfaces
+grade: devel # use "stable" to assert the snap quality
+
+apps:
+    mqttled:
+        command: bin/mqttled
+        plugs:
+          - network-bind
+          - network
+          - network-control
+          - serial-port
+    dcled:
+        command: dcled
+
+parts:
+   dcled:
+     plugin: make
+     source: https://github.com/kost/dcled.git
+     artifacts: [dcled]
+     build-packages: [libhid-dev]
+   mqttled:
+     plugin: go
+     source: src/mqttled
