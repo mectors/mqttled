@@ -29,7 +29,7 @@ func Scroll(text string) {
 	fmt.Println("received:" + text)
 	go func() {
 		snap := os.Getenv("SNAP")
-		cmd := exec.Command(snap+"/dcled", "-r", "-m", text)
+		cmd := exec.Command(snap+"/dcled", "-m", text)
 		if err := cmd.Run(); err != nil {
 			log.Fatal(err)
 		}
